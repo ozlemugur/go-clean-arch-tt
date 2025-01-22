@@ -1,35 +1,31 @@
-![automatic-message-sender Template](docs/img/purple.png)
+![go-clean-arch-tt]
 
-# automatic-message-sender template
+# go-clean-arch-tt
 
 - Don’t reinvent the wheel.
 
 - Polymorphism gives you the ability to create one module calling another and yet have the compile time dependency point against the flow of control instead of with the flow of control.
 you have absolute control over your depedency structure you can avoid wiriting fragile rigid and non reusable modules.  (Robert C. Martin)
 
+- this repo
 
 
 ## Content
 - [Quick start](#quick-start)
-- [Project structure](#project-structure)
-- [Dependency Injection](#dependency-injection)
-- [Clean Architecture](#clean-architecture)
+- [Local Debugging Cheat Sheet](#local-debugging-cheat-sheet)
 
 
 ## Quick Start
 
-
 ```sh
+# prepare the environment
+$ make prepare
 
 # create swagger files
 $ make swag-v1
 
-
-# Postgres, App
+# To bring everything up together, use the compose-up command.  Postgres, App
 $ make compose-up
-
-# Postgres
-$ make compose-up-without-app
 
 # Run app with migrations
 $ make run
@@ -40,6 +36,7 @@ $ make run
  ```sh
  curl http://localhost:8080/swagger/index.html
 ```
+
 
 ## Local Debugging Cheat Sheet
 
@@ -65,26 +62,26 @@ $ make run
 }
 ```
 
+Without application container:
+
+```sh
+$ make compose-up-without-app
+```
+
+
 ## Postgresql
 
 To see what is happening in the database:
 
 ```sh
-   docker exec -it postgresl psql -U user -d postgres
-```
-to see tables: 
-```sh
-   \dt
-```
-to see the content of the table :
-
-```sh
-   \d messages
-```
-to quit psql: 
-
-```sh
-   \q 
+# 
+$ docker exec -it postgres psql -U user -d postgres
+# to see tables: 
+$ \dt
+# to see the content of the table :
+$ \d messages
+# to quit psql: 
+$ \q 
 ```
 
 
@@ -139,10 +136,48 @@ to quit psql:
 ## Start over from the beginning
 
 ```sh
-make compose-down
-make docker-rm-volume
+$ make compose-down
+$ make docker-rm-volume
 
 ```
+
+
+## docker helper commands
+
+## docker helper commands
+
+Volume check:
+```sh
+$ docker volume ls  
+$ docker volume ls -f dangling=true
+$ docker volume rm "volumename"
+$ docker volume inspect "volumename"
+```
+
+Docker main check commands:
+```sh
+$ docker ps
+$ docker ps -a 
+$ docker rm "containerid"
+$ docker start/stop "containerid"
+$ docker images
+$ docker rmi "imageid"
+$ docker exec -it postgres psql -U user -d postgres
+```
+
+docker log check:
+```sh
+$ docker logs -tail=all <containerid>
+```
+
+
+git commands:
+```sh
+$ git remote -v
+$ pwd
+$ git reset --hard origin
+```
+
 
 ## Possible Error Amd Solutions
 
@@ -185,3 +220,6 @@ trace (zerolog.TraceLevel, -1)
 ## Useful links
 - [The Clean Architecture article](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [Twelve factors](https://12factor.net/ru/)
+
+## the fin
+  (docs/img/purple.png)
