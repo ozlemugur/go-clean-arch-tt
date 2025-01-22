@@ -38,7 +38,7 @@ run: swag-v1 ### swag run
 .PHONY: run
 
 docker-rm-volume: ### remove docker volume
-	docker volume rm automatic-message-sender_pg-data
+	docker volume rm go-clean-arch-tt_pg-data
 .PHONY: docker-rm-volume
 
 migrate-create:  ### create new migration

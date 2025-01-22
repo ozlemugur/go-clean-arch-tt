@@ -1,4 +1,4 @@
-![go-clean-arch-tt]
+![go-clean-arch-tt](docs/img/purpleGopher.svg)
 
 # go-clean-arch-tt
 
@@ -7,7 +7,11 @@
 - Polymorphism gives you the ability to create one module calling another and yet have the compile time dependency point against the flow of control instead of with the flow of control.
 you have absolute control over your depedency structure you can avoid wiriting fragile rigid and non reusable modules.  (Robert C. Martin)
 
-- this repo
+- the dependencies oppose the flow of control. this inversion of depedencies prevents the system from rotting because it stops the fan out of the copy module from growing. the copy module doesn't need to be modified because all of its outgoing depedencies terminate at the file abstracation ,new devices can be added ad nauseam without affecting the copy program one little bit.  (Robert C. Martin)
+
+- high level modules should not depend upon low level modules. Both should depend upon abstractions.
+
+- This project is developed based on the https://github.com/evrone/go-clean-template repository and was selected from among other repositories in the starred list for further development.
 
 
 ## Content
@@ -18,6 +22,9 @@ you have absolute control over your depedency structure you can avoid wiriting f
 ## Quick Start
 
 ```sh
+# we should copy env file, it works in unix based operating systems
+$ cp .env.example .env 
+
 # prepare the environment
 $ make prepare
 
@@ -223,3 +230,4 @@ trace (zerolog.TraceLevel, -1)
 
 ## the fin
   (docs/img/purple.png)
+  
