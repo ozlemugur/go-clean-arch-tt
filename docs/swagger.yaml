@@ -1,0 +1,129 @@
+basePath: /v1
+definitions:
+  entity.AutoMessageSender:
+    properties:
+      action:
+        type: string
+    type: object
+  entity.Message:
+    properties:
+      content:
+        type: string
+      recipient_phone:
+        type: string
+    type: object
+  v1.messageResponse:
+    properties:
+      Messages:
+        items:
+          $ref: '#/definitions/entity.Message'
+        type: array
+      count:
+        description: Number of messages in the response
+        type: integer
+      error:
+        description: Error message, optional field
+        type: string
+      status:
+        description: Status of the response (e.g., "success", "empty")
+        type: string
+    type: object
+  v1.response:
+    properties:
+      error:
+        example: message
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: the system send 2 messages in  every 2 minutes
+  title: Automatic Message Sender API
+  version: "1.0"
+paths:
+  /automatic-message-sender:
+    post:
+      consumes:
+      - application/json
+      description: Starts or stops the automatic message sending scheduler based on
+        the provided action.
+      operationId: control-message-scheduler
+      parameters:
+      - description: Scheduler action (start or stop)
+        in: body
+        name: action
+        required: true
+        schema:
+          $ref: '#/definitions/entity.AutoMessageSender'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Operation completed successfully
+          schema:
+            $ref: '#/definitions/v1.response'
+        "400":
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/v1.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/v1.response'
+      summary: Control automatic message sender scheduler
+      tags:
+      - scheduler
+  /messages:
+    post:
+      consumes:
+      - application/json
+      description: Add a new message to the database
+      operationId: insert-message
+      parameters:
+      - description: Message to insert
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Message'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/v1.response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/v1.response'
+      summary: Insert a message
+      tags:
+      - messages
+  /messages/sent:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all messages with status "sent" from the database
+      operationId: get-sent-messages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/v1.messageResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/v1.response'
+      summary: Retrieve sent messages
+      tags:
+      - messages
+swagger: "2.0"
