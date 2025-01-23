@@ -301,6 +301,9 @@ $ docker logs -tail=all <containerid>
 - TODO: we should consider pagination for the GetSentMessages endpoint
 - TODO: outbox pattern or dead letter queue can be suitable to retain data consistency. At least we ensure our data.
 - TODO: is migrate tool able to bulk insertion.
+- TODO: unit test should be added to the project
+- TODO: integration test should be extended.
+
 
 #### Useful links
 - [The Clean Architecture article](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
