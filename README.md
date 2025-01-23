@@ -38,6 +38,7 @@ For example, you need to access the database from HTTP (controller). Both HTTP a
 
 ## Content
 - [Quick start](#quick-start)
+- [Project structure](#Project-structure)
 - [Local Debugging Cheat Sheet](#local-debugging-cheat-sheet)
 - [Postgresql monitoring](#Postgresql-monitoring)
 - [Start over from the beginning](#Start-over-from-the-beginning)
