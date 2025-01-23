@@ -304,7 +304,7 @@ $ docker logs -tail=all <containerid>
 
 #### Useful links
 - [The Clean Architecture article](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-- [Twelve factors](https://12factor.net/ru/)
+- [Twelve factors](https://12factor.net/)
 
 ## the fin
 
