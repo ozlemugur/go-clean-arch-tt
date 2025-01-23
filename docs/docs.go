@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/automatic-message-sender": {
             "post": {
-                "description": "Starts or stops the automatic message sending scheduler based on the provided action.",
+                "description": "Starts or stops the automatic message sender scheduler based on the provided action (\"start\" or \"stop\").",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,13 +25,13 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "scheduler"
+                    "Scheduler"
                 ],
-                "summary": "Control automatic message sender scheduler",
+                "summary": "Control the automatic message sender scheduler",
                 "operationId": "control-message-scheduler",
                 "parameters": [
                     {
-                        "description": "Scheduler action (start or stop)",
+                        "description": "Action for the scheduler (start or stop)",
                         "name": "action",
                         "in": "body",
                         "required": true,
@@ -42,21 +42,21 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Operation completed successfully",
+                        "description": "Operation completed successfully with a success message",
                         "schema": {
-                            "$ref": "#/definitions/v1.response"
+                            "$ref": "#/definitions/v1.autoMessageResponse"
                         }
                     },
                     "400": {
-                        "description": "Invalid input",
+                        "description": "Invalid input or unsupported action",
                         "schema": {
-                            "$ref": "#/definitions/v1.response"
+                            "$ref": "#/definitions/v1.autoMessageResponse"
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal server error while starting or stopping the scheduler",
                         "schema": {
-                            "$ref": "#/definitions/v1.response"
+                            "$ref": "#/definitions/v1.autoMessageResponse"
                         }
                     }
                 }
@@ -148,7 +148,8 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "action": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "start/stop"
                 }
             }
         },
@@ -159,6 +160,17 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "recipient_phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1.autoMessageResponse": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "status": {
                     "type": "string"
                 }
             }
@@ -205,7 +217,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/v1",
 	Schemes:          []string{},
 	Title:            "Automatic Message Sender API",
-	Description:      "the system send 2 messages in  every 2 minutes",
+	Description:      "The system sends 2 messages every 2 minutes.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

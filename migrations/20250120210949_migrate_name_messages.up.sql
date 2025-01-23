@@ -5,3 +5,4 @@ CREATE TABLE IF NOT EXISTS messages(
     status VARCHAR(20) DEFAULT 'unsent',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE INDEX idx_status ON messages(status);

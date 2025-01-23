@@ -12,5 +12,5 @@ type Message struct {
 }
 
 type AutoMessageSender struct {
-	Action string `json:"action" `
+	Action string `json:"action" example:"start/stop" `
 }

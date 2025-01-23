@@ -90,5 +90,10 @@ func (r *messageRoutes) InsertMessage(c *gin.Context) {
 		errorResponse(c, http.StatusInternalServerError, "Failed to insert message")
 		return
 	}
-	c.JSON(http.StatusOK, nil)
+
+	response := messageResponse{
+		Status: "success",
+	}
+
+	c.JSON(http.StatusOK, response)
 }

@@ -41,7 +41,7 @@ func Run(cfg *config.Config) {
 	autoMessageScheduler := scheduler.NewAutoMessageScheduler(messageUseCase, l)
 	autoMessageScheduler.Start()
 
-	autoMessageUseCase := usecase.NewAutoMessageUseCase(messageUseCase, autoMessageScheduler, l)
+	autoMessageUseCase := usecase.NewAutoMessageSchedulerUseCase(messageUseCase, autoMessageScheduler, l)
 
 	// HTTP Server
 	handler := gin.New()

@@ -57,10 +57,6 @@ func (uc *MessageUseCase) InsertMessage(ctx context.Context, msg entity.Message)
 
 // FetchAndSendMessages -.
 func (uc *MessageUseCase) FetchAndSendMessages(ctx context.Context) error {
-	/// we should fetch two messages from the db and sent to the sender
-	// if we have problem while sending we should reconsider the solution of the problem to not lose the data.
-	// if everything is okay, we should update the records.
-	// we need transaction managemnet here.
 
 	messages, err := uc.GetTwoUnSentMessages(ctx)
 	if err != nil {
@@ -80,6 +76,7 @@ func (uc *MessageUseCase) FetchAndSendMessages(ctx context.Context) error {
 		err = uc.repo.UpdateMessageStatus(ctx, msg.ID, "sent")
 		if err != nil {
 			uc.l.Error(err, "Failed to update message status", "MessageID", msg.ID)
+			//TODO: outbox pattern or dead letter queue will be good solution for this part.
 		}
 	}
 	return nil

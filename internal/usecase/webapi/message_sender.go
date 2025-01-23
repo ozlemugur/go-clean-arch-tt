@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -27,24 +27,17 @@ func (wc *MessageSenderWebAPI) SendMessage(to, content string) (string, error) {
 		To:      to,
 		Content: content,
 	}
-
-	// Serialize the payload to JSON
 	data, err := json.Marshal(payload)
 	if err != nil {
 		return "", fmt.Errorf("failed to marshal payload: %w", err)
 	}
-
-	// Create a new HTTP request
 	req, err := http.NewRequest("POST", wc.URL, bytes.NewBuffer(data))
 	if err != nil {
 		return "", fmt.Errorf("failed to create request: %w", err)
 	}
 
-	// Set headers
 	req.Header.Set("Content-Type", "application/json")
-	//	req.Header.Set("x-ins-auth-key", wc.AuthKey)
 
-	// Send the request
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -52,8 +45,7 @@ func (wc *MessageSenderWebAPI) SendMessage(to, content string) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	// Read and process the response
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", fmt.Errorf("failed to read response: %w", err)
 	}
@@ -62,7 +54,6 @@ func (wc *MessageSenderWebAPI) SendMessage(to, content string) (string, error) {
 		return "", fmt.Errorf("unexpected response code: %d, body: %s", resp.StatusCode, string(body))
 	}
 
-	// Extract messageId from the response if needed
 	var responseMap map[string]interface{}
 	if err := json.Unmarshal(body, &responseMap); err != nil {
 		return "", fmt.Errorf("failed to parse response body: %w", err)

@@ -18,7 +18,7 @@ import (
 // NewRouter -.
 // Swagger spec:
 // @title       Automatic Message Sender API
-// @description the system send 2 messages in  every 2 minutes
+// @description The system sends 2 messages every 2 minutes.
 // @version     1.0
 // @host        localhost:8080
 // @BasePath    /v1
@@ -26,18 +26,6 @@ func NewRouter(handler *gin.Engine, l logger.Interface, a usecase.AutoMessager, 
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
-
-	// CORS Middleware
-	handler.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
-			return
-		}
-		c.Next()
-	})
 
 	// Swagger
 	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
@@ -49,10 +37,13 @@ func NewRouter(handler *gin.Engine, l logger.Interface, a usecase.AutoMessager, 
 	// Prometheus metrics
 	handler.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
+	l.Info("http://localhost:8080/swagger/index.html")
+
 	// Routers
 	h := handler.Group("/v1")
 	{
 		newMessageRoutes(h, t, l)
 		newAutoMessageSenderRoutes(h, a, l)
 	}
+
 }
