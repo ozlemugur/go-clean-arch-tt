@@ -294,7 +294,7 @@ $ docker logs -tail=all <containerid>
 
 
 
-#### we should add this features
+#### we should add these features
 
 - TODO: env setup should be reorganized adherence to 12 factor.
 - TODO: we should consider to add JWT Authentication Middleware
