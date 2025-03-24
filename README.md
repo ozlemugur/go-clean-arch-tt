@@ -1,6 +1,6 @@
 ![go-clean-arch-tt](docs/img/purpleGopher.svg)
 
-# go clean architecture (tahassurtalih)
+# go clean architecture 
 
 - Don’t reinvent the wheel.
 
